@@ -17,7 +17,7 @@ st.set_page_config(
 with st.container():
     col1, col2 = st.columns(spec=[1, 1], gap='small', vertical_alignment='center')
     with col1:
-        banner_path = "src/banner.jpeg"
+        banner_path = "images/banner.jpeg"
         try:
             st.image(banner_path, width=500)
         except FileNotFoundError:
@@ -143,6 +143,20 @@ def criar_grafico_dispersao(df):
 
         fig.add_hline(y=50, line_dash="dash", line_color="white", opacity=0.5)
         fig.add_vline(x=df['total_aparicoes'].mean(), line_dash="dash", line_color="white", opacity=0.5)
+        
+        st.write("### Categoria dos decks")
+        with st.container():
+            col1, col2 = st.columns(spec=[1, 1], gap='small')
+            with col1:
+                st.markdown("- **TOPPERS**: Alta taxa de Top 4 (≥ 50%) e muitas aparições (acima da média).")
+            with col2:
+                st.markdown("- **HIDDEN GEMS**: Alta taxa de Top 4 (≥ 50%), mas menos populares.")
+        with st.container():
+            col1, col2 = st.columns(spec=[1, 1], gap='small')
+            with col1:
+                st.markdown("- **QUERIDINHOS DOS FÃS**: Populares (acima da média de aparições), mas com baixa taxa de Top 4 (< 50%).")
+            with col2:
+                st.markdown("- **CRINGES**: Pouco populares e baixa taxa de Top 4.")
 
         logger.info("Gráfico criado com sucesso")
         return fig
@@ -174,21 +188,10 @@ def main():
         
         df = obter_performance_dos_decks(con)
         if df is not None and not df.empty:
-            df['ranking'] = df.reset_index().index + 1
-            
-            colunas_exibir = [
-                'ranking', 'deck', 'total_aparicoes', 
-                'quantidade_top4', 'taxa_top4', 
-                'primeira_aparicao', 'ultima_aparicao', 'categoria_performance'
-            ]
-            df = df[colunas_exibir]
-            
             fig = criar_grafico_dispersao(df)
             if fig is not None:
                 st.plotly_chart(fig, use_container_width=True)
-            
-            st.subheader("Dados Detalhados")
-            st.dataframe(df, use_container_width=True)
+                st.write("")
         else:
             st.warning("Nenhum dado encontrado para exibição.")
     except Exception as e:
