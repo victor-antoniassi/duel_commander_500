@@ -151,7 +151,7 @@ def criar_grafico_dispersao(df):
         raise
 
 def main():
-    st.title("🏆 Duel Commander 500 - Análise do TOP 4")
+    st.title("🏆 Duel Commander 500 - Top 4 Conversion")
     
     con = None
 
