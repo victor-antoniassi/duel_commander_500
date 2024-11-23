@@ -1,1 +1,5 @@
 .venv
+tests.py
+etl.log
+data/raw/*
+data/refined/duelcmd500.xlsx
