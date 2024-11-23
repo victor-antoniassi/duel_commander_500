@@ -17,7 +17,7 @@ st.set_page_config(
 with st.container():
     col1, col2 = st.columns(spec=[1, 1], gap='small', vertical_alignment='center')
     with col1:
-        banner_path = "images/banner.jpeg"
+        banner_path = "src/images/banner.jpeg"
         try:
             st.image(banner_path, width=500)
         except FileNotFoundError:
